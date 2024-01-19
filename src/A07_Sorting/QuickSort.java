@@ -33,8 +33,8 @@ public class QuickSort implements PersonenSort {
 			}
 		}
 
-		swap(personen, i + 1, right); // Diese Zeile wurde hinzugefügt
-		return i + 1; // Rückgabe von 'i + 1' anstatt '1'
+		swap(personen, i + 1, right);
+		return i + 1;
 	}
 
 	private void swap(Person[] personen, int i, int j) {

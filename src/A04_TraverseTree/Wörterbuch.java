@@ -1,5 +1,6 @@
 package A04_TraverseTree;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -20,8 +21,10 @@ public class Wörterbuch {
 	 * @return Zahl der Wörter (=Anzahl der Elemente)
 	 */
 	public int countWordsInSubTree(Wort w) {
-		
-		return 0;
+		if	(w==null) {
+			return 0;
+		}
+		return countWordsInSubTree(w.getLeft()) + 1 + countWordsInSubTree(w.getRight());
 	}
 
 	/**
@@ -30,10 +33,33 @@ public class Wörterbuch {
 	 * @return Menge aller zutreffenden Wörter
 	 */
 	public Set<String> getWordsWithPrefix(String prefix) {
-		
-		return null;
+		Set<String> matchingWords = new HashSet<>();
+		getWordsWithPrefix(root, prefix, matchingWords);
+		return matchingWords;
 	}
-	
+
+	private void getWordsWithPrefix(Wort current, String prefix, Set<String> matchingWords) {
+		if (current == null) {
+			return;
+		}
+
+		int compareResult = current.getWort().compareTo(prefix);
+
+		if (compareResult >= 0) {
+			// Das aktuelle Wort kommt nach dem Präfix oder ist gleich
+			if (current.getWort().startsWith(prefix)) {
+				matchingWords.add(current.getWort());
+			}
+			// Da die Wörter im Baum lexikographisch sortiert sind,
+			// suchen Sie weiter im linken Teilbaum
+			getWordsWithPrefix(current.getLeft(), prefix, matchingWords);
+		}
+
+		// Suchen Sie im rechten Teilbaum, wenn das aktuelle Wort lexikographisch kleiner als das Präfix ist
+		if (compareResult <= 0) {
+			getWordsWithPrefix(current.getRight(), prefix, matchingWords);
+		}}
+
 
 	/**
 	 * Neues Wort hinzufügen
